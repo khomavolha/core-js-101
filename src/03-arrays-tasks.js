@@ -34,8 +34,10 @@ function findElement(arr, value) {
  *    2 => [ 1, 3 ]
  *    5 => [ 1, 3, 5, 7, 9 ]
  */
-function generateOdds(/* len */) {
-  throw new Error('Not implemented');
+function generateOdds(len) {
+  return Array(len)
+    .fill(1)
+    .map((value, index) => index * 2 + 1);
 }
 
 /**
@@ -50,8 +52,8 @@ function generateOdds(/* len */) {
  *    [0, 1, 2, 3, 4, 5] => [0, 1, 2, 3, 4, 5,   0, 1, 2, 3, 4, 5]
  *    [] => []
  */
-function doubleArray(/* arr */) {
-  throw new Error('Not implemented');
+function doubleArray(arr) {
+  return arr.concat(arr);
 }
 
 /**
@@ -264,8 +266,13 @@ function getSecondItems(arr) {
  *  [ 'a', 'b', 'c', null ] => [ 'a', 'b','b', 'c','c','c',  null,null,null,null ]
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
-function propagateItemsByPositionIndex(/* arr */) {
-  throw new Error('Not implemented');
+function propagateItemsByPositionIndex(arr) {
+  let result = [];
+  arr.map((value, index) => {
+    result = result.concat(Array(index + 1).fill(value));
+    return value;
+  });
+  return result;
 }
 
 /**
@@ -467,8 +474,12 @@ function sortCitiesArray(arr) {
  *           [0,0,0,1,0],
  *           [0,0,0,0,1]]
  */
-function getIdentityMatrix(/* n */) {
-  throw new Error('Not implemented');
+function getIdentityMatrix(n) {
+  return new Array(n).fill(0).map((el, i) => {
+    const temp = new Array(n).fill(0);
+    temp[i] = 1;
+    return temp;
+  });
 }
 
 /**
@@ -577,8 +588,8 @@ function selectMany(arr, childrenSelector) {
  *   ['one','two','three'], [2]       => 'three'  (arr[2])
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
-function getElementByIndexes(/* arr, indexes */) {
-  throw new Error('Not implemented');
+function getElementByIndexes(arr, indexes) {
+  return indexes.reduce((acc, index) => acc[index], arr);
 }
 
 /**
@@ -599,8 +610,16 @@ function getElementByIndexes(/* arr, indexes */) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  if (arr.length < 2) return arr;
+  const len = Math.floor(arr.length / 2);
+  let result = [];
+  if (arr.length % 2) {
+    result = [...arr.slice(-len), arr[len], ...arr.slice(0, len)];
+  } else {
+    result = [...arr.slice(-len), ...arr.slice(0, len)];
+  }
+  return result;
 }
 
 module.exports = {
