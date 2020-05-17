@@ -122,9 +122,7 @@ function timeSpanToString(startDate, endDate) {
  */
 function angleBetweenClockHands(date) {
   const min = date.getUTCMinutes();
-  // eslint-disable-next-line operator-linebreak
-  const hours =
-    date.getUTCHours() > 12 ? date.getUTCHours() - 12 : date.getUTCHours();
+  const hours = date.getUTCHours() > 12 ? date.getUTCHours() - 12 : date.getUTCHours();
   let aver = 60 * hours - 11 * min;
   aver = aver > 360 ? Math.abs(aver) - 360 : Math.abs(aver);
   return (0.5 * Math.abs(aver) * Math.PI) / 180;
