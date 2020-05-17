@@ -74,8 +74,34 @@ function isLeapYear(date) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,10,0,0,250)     => "00:00:00.250"
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
-function timeSpanToString(/* startDate, endDate */) {
-  throw new Error('Not implemented');
+function timeSpanToString(startDate, endDate) {
+  let tb = endDate - startDate;
+  let h = `${Math.floor(tb / (1000 * 60 * 60))}`;
+  tb -= h * (1000 * 60 * 60);
+  if (h.length === 1) {
+    h = `0${h}`;
+  }
+  let m = `${Math.floor(tb / (1000 * 60))}`;
+  tb -= m * (1000 * 60);
+  if (m.length === 1) {
+    m = `0${m}`;
+  }
+  let s = `${Math.floor(tb / 1000)}`;
+  tb -= `${s * 1000}`;
+  if (s.length === 1) {
+    s = `0${s}`;
+  }
+  tb = `${tb}`;
+  if (tb.length === 2) {
+    tb = `0${tb}`;
+  }
+  if (tb.length === 1) {
+    tb = `00${tb}`;
+  }
+  if (tb.length === 0) {
+    tb = `000${tb}`;
+  }
+  return `${h}:${m}:${s}.${tb}`;
 }
 
 /**
@@ -94,8 +120,14 @@ function timeSpanToString(/* startDate, endDate */) {
  *    Date.UTC(2016,3,5,18, 0) => Math.PI
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
-function angleBetweenClockHands(/* date */) {
-  throw new Error('Not implemented');
+function angleBetweenClockHands(date) {
+  const min = date.getUTCMinutes();
+  // eslint-disable-next-line operator-linebreak
+  const hours =
+    date.getUTCHours() > 12 ? date.getUTCHours() - 12 : date.getUTCHours();
+  let aver = 60 * hours - 11 * min;
+  aver = aver > 360 ? Math.abs(aver) - 360 : Math.abs(aver);
+  return (0.5 * Math.abs(aver) * Math.PI) / 180;
 }
 
 module.exports = {
