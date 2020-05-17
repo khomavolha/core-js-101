@@ -119,8 +119,9 @@ function isTriangle(a, b, c) {
  *   { top:20, left:20, width: 20, height: 20 }    =>  false
  *
  */
-function doRectanglesOverlap(/* rect1, rect2 */) {
-  throw new Error('Not implemented');
+function doRectanglesOverlap(rect1, rect2) {
+  const a = { x: rect1.top + rect1.height, y: rect1.left + rect1.width };
+  return a.x >= rect2.top && a.y >= rect2.left;
 }
 
 /**
@@ -199,8 +200,10 @@ function findFirstSingleChar(str) {
  *   5, 3, true, true   => '[3, 5]'
  *
  */
-function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
-  throw new Error('Not implemented');
+function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
+  const open = isStartIncluded ? '[' : '(';
+  const close = isEndIncluded ? ']' : ')';
+  return a > b ? `${open}${b}, ${a}${close}` : `${open}${a}, ${b}${close}`;
 }
 
 /**
@@ -337,8 +340,8 @@ function isBracketsBalanced(str) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  return num.toString(n);
 }
 
 /**
@@ -409,8 +412,30 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  const win = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  const newP = position
+    .map((value) => {
+      if (value.length < 3) value.push(undefined);
+      return value;
+    })
+    .join(',')
+    .split(',');
+  let res;
+  win.forEach((arr) => {
+    if (arr.every((value) => newP[value] === 'X')) res = 'X';
+    if (arr.every((value) => newP[value] === '0')) res = '0';
+  });
+  return res;
 }
 
 module.exports = {
